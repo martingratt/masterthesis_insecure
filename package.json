@@ -1,0 +1,26 @@
+{
+  "name": "masterthesis_insecure",
+  "version": "1.0.0",
+  "description": "This is the repository of the insecure prototype of my master thesis.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martingratt/masterthesis_insecure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martingratt/masterthesis_insecure/issues"
+  },
+  "homepage": "https://github.com/martingratt/masterthesis_insecure#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
