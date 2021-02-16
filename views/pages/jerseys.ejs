@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 10px">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<h1>Jerseys</h1>
+<p>
+<table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Club</th>
+            <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <% jerseyArray.forEach(function(jersey) { %>
+        <tr>
+            <td><%= jersey.id %></td>
+            <td><%= jersey.name %></td>
+            <td><%= jersey.club %></td>
+            <td>
+                <input type="button" onclick="location.href='/jerseys/<%= jersey.id %>'" value="Details" />
+            </td>
+        </tr>
+        <% }); %>
+</table>
+
+</p>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
