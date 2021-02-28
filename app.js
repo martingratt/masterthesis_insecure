@@ -23,5 +23,5 @@ app.get('/about', ((req, res) => res.render('about')))
 app.use((req, res, next) => {res.render('404')});
 
 app.listen(port, () =>
-    console.log(`Server started at port ` + port)
+    console.log(`Server started at port  ` + port)
 );
