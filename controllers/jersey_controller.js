@@ -26,6 +26,7 @@ export let jerseyController = {
             result1 => {
                 JerseyMysqlStorage.getJerseys().then(
                     result2 => {
+                        console.log(result2)
                         res.render('jerseys', {jerseyArray: result2})
                     }
                 ).catch(error => {res.status(500).send(error)})
