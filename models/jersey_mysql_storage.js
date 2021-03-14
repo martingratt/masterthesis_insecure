@@ -29,4 +29,17 @@ export class JerseyMysqlStorage {
         });
     }
 
+    static insertJersey(club, name, number, size, year, colour) {
+        const stmt = `Insert into jersey (club, name, number, size, year, colour) VALUES (?, ?, ?, ?, ?, ?)`
+        return new Promise((resolve, reject) => {
+            pool.query(stmt, [club, name, number, size, year, colour], (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        });
+    }
+
 }

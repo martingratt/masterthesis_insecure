@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <%- include('../partials/head'); %>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+        function postJersey1() {
+            document.getElementById('button1').disabled = false;
+            const exampleParagraph1 = document.getElementById('exampleParagraph1');
+            const club = document.getElementById('club').value;
+            exampleParagraph1.innerHTML =  'Are you sure you want to add the following jersey of ' + club
+        }
+
+    </script>
+
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<div class="container1">
+    <h1>Add jersey</h1>
+
+    <form action="http://localhost:8888/jerseys" method="post">
+        <div class="form-group">
+            <label for="club">Club</label>
+            <input class="form-control" id="club" name ="club" placeholder="Juventus Turin">
+        </div>
+        <div class="form-group">
+            <label for="name">Players name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Cristiano Ronaldo">
+        </div>
+        <div class="form-group">
+            <label for="number">Jersey Number</label>
+            <input type="number" class="form-control" id="number" name="number" placeholder="9">
+        </div>
+        <div class="form-group">
+            <label for="size">Size</label>
+            <input type="text" class="form-control" id="size" name="size" placeholder="L">
+        </div>
+        <div class="form-group">
+            <label for="year">Season</label>
+            <input type="text" class="form-control" id="year" name="year" placeholder="2020">
+        </div>
+        <div class="form-group">
+            <label for="colour">Colour</label>
+            <input type="text" class="form-control" id="colour" name="colour" placeholder="Red">
+        </div>
+        <div>
+            <button id="button1" class="btn btn-primary" disabled="true">Submit</button>
+        </div>
+
+    </form>
+
+    <p><%- test %></p>
+    <p id ="exampleParagraph1"></p>
+
+    <button class="btn btn-primary" onclick="postJersey1()">Check</button>
+
+</div>
+
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
