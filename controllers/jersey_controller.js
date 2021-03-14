@@ -20,6 +20,17 @@ export let jerseyController = {
                 }
             }
         ).catch(error => {res.status(500).send(error)})
+    },
+    insertJersey(club, name, number, size, year, colour, res) {
+        JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour).then(
+            result1 => {
+                JerseyMysqlStorage.getJerseys().then(
+                    result2 => {
+                        res.render('jerseys', {jerseyArray: result2})
+                    }
+                ).catch(error => {res.status(500).send(error)})
+            }
+        ).catch(error => {res.status(500).send(error)})
     }
 
 }
