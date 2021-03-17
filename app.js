@@ -4,10 +4,21 @@ dotenv.config();
 import path from 'path';
 import bodyParser from 'body-parser';
 
+// ie
+import cookieParser from 'cookie-parser';
+import escape from 'escape-html';
+import serialize from 'node-serialize';
+import child_process from 'child_process';
+
 // routers
 import {jerseyRouter} from './routes/jerseys.js';
 
+
 const app = express();
+
+// ie
+app.use(cookieParser())
+
 const port = process.env.APP_PORT || 8888
 const __dirname = path.resolve(path.dirname(''));
 
@@ -24,6 +35,25 @@ app.get('/jersey')
 app.get('/addJersey', (req, res) => {
     res.render('addJersey', {test: req.query.test1})
 });
+
+// insecure deserialziation
+app.get('/insecure_deserialization', function(req, res) {
+        if (req.cookies.profile) {
+            const str = new Buffer(req.cookies.profile, 'base64').toString();
+            const obj = serialize.unserialize(str);
+            if (obj.username) {
+                res.render('insecureDeserialization', {username: obj.username})
+            }
+        } else {
+            res.cookie('profile', "eyJ1c2VybmFtZSI6ImFqaW4iLCJjb3VudHJ5IjoiaW5kaWEiLCJjaXR5IjoiYmFuZ2Fsb3JlIn0=", {
+                maxAge: 900000,
+                httpOnly: true
+            });
+            res.render('insecureDeserialization', {username: 'Unknown'})
+        }
+
+});
+
 app.get('/about', ((req, res) => res.render('about')))
 app.use((req, res, next) => {res.render('404')});
 

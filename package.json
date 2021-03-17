@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/martingratt/masterthesis_insecure#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
+    "escape-html": "^1.0.3",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "node-serialize": "0.0.4",
+    "nodemon": "^2.0.7"
   }
 }
