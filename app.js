@@ -42,10 +42,10 @@ app.get('/insecure_deserialization', function(req, res) {
             const str = new Buffer(req.cookies.profile, 'base64').toString();
             const obj = serialize.unserialize(str);
             if (obj.username) {
-                res.render('insecureDeserialization', {username: obj.username})
+                res.render('insecureDeserialization', {username: obj.username, city: obj.city})
             }
         } else {
-            res.cookie('profile', "eyJ1c2VybmFtZSI6ImFqaW4iLCJjb3VudHJ5IjoiaW5kaWEiLCJjaXR5IjoiYmFuZ2Fsb3JlIn0=", {
+            res.cookie('profile', "eyJ1c2VybmFtZSI6IkFuZHJlYXMiLCJjb3VudHJ5IjoiQXVzdHJpYSIsImNpdHkiOiJWaWVubmEifQ==", {
                 maxAge: 900000,
                 httpOnly: true
             });
