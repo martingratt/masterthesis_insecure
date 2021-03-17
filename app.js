@@ -45,6 +45,7 @@ app.get('/insecure_deserialization', function(req, res) {
                 res.render('insecureDeserialization', {username: obj.username, city: obj.city})
             }
         } else {
+            // eyJ1c2VybmFtZSI6ICJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7Y29uc29sZS5sb2coJ3JjZScpOyB9KCkiICwiY291bnRyeSI6IkF1c3RyaWEiLCJjaXR5IjoiS3Vmc3RlaW4ifQ== console.log('rce');
             res.cookie('profile', "eyJ1c2VybmFtZSI6IkFuZHJlYXMiLCJjb3VudHJ5IjoiQXVzdHJpYSIsImNpdHkiOiJWaWVubmEifQ==", {
                 maxAge: 900000,
                 httpOnly: true
