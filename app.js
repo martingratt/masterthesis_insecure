@@ -49,7 +49,7 @@ app.get('/insecure_deserialization', function(req, res) {
                 maxAge: 900000,
                 httpOnly: true
             });
-            res.render('insecureDeserialization', {username: 'Unknown'})
+            res.render('insecureDeserialization', {username: 'Unknown', city: 'earth'})
         }
 
 });
