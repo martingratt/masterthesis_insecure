@@ -4,7 +4,7 @@ dotenv.config();
 import path from 'path';
 import bodyParser from 'body-parser';
 
-// ie
+// insecure deserialization
 import cookieParser from 'cookie-parser';
 import escape from 'escape-html';
 import serialize from 'node-serialize';
@@ -12,6 +12,7 @@ import child_process from 'child_process';
 
 // routers
 import {jerseyRouter} from './routes/jerseys.js';
+import {userRouter} from "./routes/user_router.js";
 
 
 const app = express();
@@ -27,14 +28,17 @@ app.set('views', __dirname + '/views/pages');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('login')
 });
 
 app.use('/jerseys/', jerseyRouter);
+app.use('/user', userRouter);
 app.get('/jersey')
+app.get('/home', (req, res) => res.render('index'));
 app.get('/addJersey', (req, res) => {
     res.render('addJersey', {test: req.query.test1})
 });
+app.get('/register', (req, res) => res.render('register'));
 
 // insecure deserialziation
 app.get('/insecure_deserialization', function(req, res) {
@@ -52,7 +56,6 @@ app.get('/insecure_deserialization', function(req, res) {
             });
             res.render('insecureDeserialization', {username: 'Unknown', city: 'earth'})
         }
-
 });
 
 app.get('/about', ((req, res) => res.render('about')))

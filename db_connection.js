@@ -4,8 +4,8 @@ import mysql from 'mysql';
 export let pool = mysql.createPool({
     connectionLimit : 10,
     host: 'localhost',
-    user: 'root',
-    password: '3connect2020!',
-    port: 30306,
+    user: 'admin',
+    password: 'k2qq5IGwSXAs9g0KwkRh',
+    port: 3306,
     database: 'masterthesis'
 })

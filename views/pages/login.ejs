@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register User</title>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<div class="container1">
+    <h1>Login user</h1>
+
+    <form action="http://localhost:8888/user/login" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" name ="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div>
+            <button id="button1" class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+
+
+</div>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
