@@ -4,6 +4,9 @@ dotenv.config();
 import path from 'path';
 import bodyParser from 'body-parser';
 
+//command execution
+import {exec} from 'child_process';
+
 // insecure deserialization
 import cookieParser from 'cookie-parser';
 import escape from 'escape-html';
@@ -38,6 +41,18 @@ app.get('/home', (req, res) => res.render('index'));
 app.get('/addJersey', (req, res) => {
     res.render('addJersey', {test: req.query.test1})
 });
+app.get('/command_execution/:command', (req, res) => {
+    const command = req.params.command;
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            res.status(500).send(error)
+        } else {
+            res.status(200).send(stdout)
+        }
+
+    });
+
+})
 app.get('/register', (req, res) => res.render('register'));
 
 // insecure deserialziation
