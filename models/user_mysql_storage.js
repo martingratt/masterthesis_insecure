@@ -13,7 +13,6 @@ export const UserMysqlStorage = {
             })
         }))
     },
-
     getUserByUserName(username) {
         const stmt = `SELECT * FROM website_user WHERE username = ?`;
         return new Promise(((resolve, reject) => {
