@@ -41,6 +41,7 @@ export let userController = {
                     });
                     res.render('index');
                 } else {
+                    // delete the profile cookie from the users browser
                     res.clearCookie('profile');
                     res.render('login')
                 }
