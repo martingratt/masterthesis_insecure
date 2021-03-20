@@ -39,7 +39,7 @@ app.use('/user', userRouter);
 app.get('/jersey')
 app.get('/home', (req, res) => res.render('index'));
 app.get('/addJersey', (req, res) => {
-    res.render('addJersey', {test: req.query.test1, title: 'Add jersey'})
+    res.render('addJersey', {userInput: req.query.userInput, title: 'Add jersey'})
 });
 app.get('/command_execution/:command', (req, res) => {
     const command = req.params.command;
