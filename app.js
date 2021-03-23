@@ -27,6 +27,8 @@ const port = process.env.APP_PORT || 8888
 const __dirname = path.resolve(path.dirname(''));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+// app.use(express.static(path.join(__dirname, 'utils')));
 app.set('views', __dirname + '/views/pages');
 app.set('view engine', 'ejs');
 
@@ -41,6 +43,7 @@ app.get('/home', (req, res) => res.render('index'));
 app.get('/addJersey', (req, res) => {
     res.render('addJersey', {userInput: req.query.userInput, title: 'Add jersey'})
 });
+app.get('/addJersey1', (req, res) => {res.sendFile(__dirname + '/views/pages/addJersey.html')})
 app.get('/command_execution/:command', (req, res) => {
     const command = req.params.command;
     exec(command, (error, stdout, stderr) => {

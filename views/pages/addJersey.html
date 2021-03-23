@@ -1,36 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <link rel="stylesheet" href="../styles/styles.css">
-    <%- include('../partials/head'); %>
-
     <meta charset="UTF-8">
     <title>Title</title>
-
-    <script>
-
-        function postJersey1() {
-            document.getElementById('button1').disabled = false;
-            const exampleParagraph1 = document.getElementById('exampleParagraph1');
-            const club = document.getElementById('club').value;
-            exampleParagraph1.innerHTML =  'Are you sure you want to add the following jersey of ' + club
-        }
-
-    </script>
-
-
 </head>
 <body>
 
 <script src="/xssInAddJersey.js"></script>
 
-<header>
-    <%- include('../partials/header'); %>
-</header>
-
 <div class="container1">
 
-    <h1><%- title %></h1>
+    <h1>Add jersey</h1>
 
     <form action="http://localhost:8888/jerseys" method="post">
         <div class="form-group">
@@ -63,17 +43,11 @@
 
     </form>
 
-    <p><%- userInput %></p>
     <p id ="exampleParagraph1"></p>
 
     <button class="btn btn-primary" onclick="xss()">Check</button>
 
 </div>
-
-<footer>
-    <%- include('../partials/footer'); %>
-</footer>
-
 
 </body>
 </html>
