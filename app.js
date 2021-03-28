@@ -76,6 +76,20 @@ app.get('/insecure_deserialization', function(req, res) {
         }
 });
 
+
+app.get('/terms_and_conditions', (req, res) => {
+    res.sendFile(__dirname + '/views/pages/path_traversal.html')
+})
+
+app.get('/path_traversal', (req, res) => {
+    let fileName = req.query.fileName
+    // forbidden
+    // let pathName = __dirname + '/public/'
+    // let filePath = pathName + fileName
+    let filePath = __dirname + fileName
+    res.sendFile(filePath)
+})
+
 app.get('/about', ((req, res) => res.render('about')))
 app.use((req, res, next) => {res.render('404')});
 
