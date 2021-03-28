@@ -44,8 +44,9 @@ app.get('/addJersey', (req, res) => {
     res.render('addJersey', {userInput: req.query.userInput, title: 'Add jersey'})
 });
 app.get('/addJersey1', (req, res) => {res.sendFile(__dirname + '/views/pages/addJersey.html')})
-app.get('/command_execution/:command', (req, res) => {
-    const command = req.params.command;
+app.get('/ping', ((req, res) => res.sendFile(__dirname + '/views/pages/ping.html')))
+app.get('/command_execution', (req, res) => {
+    const command = 'ping ' + req.query.ip;
     exec(command, (error, stdout, stderr) => {
         if (error) {
             res.status(500).send(error)

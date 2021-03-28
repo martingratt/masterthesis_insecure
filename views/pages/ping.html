@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/">My very insecure app</a>
     <ul class="navbar-nav mr-auto">
@@ -24,3 +32,16 @@
         </li>
     </ul>
 </nav>
+<h1>Ping IP</h1>
+<form action="http://localhost:8888/command_execution" method="get">
+    <div class="form-group">
+        <label for="ip">IP</label>
+        <input class="form-control" id="ip" name ="ip" placeholder="8.8.8.8">
+    </div>
+    <div>
+        <button id="button1" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+</body>
+</html>
