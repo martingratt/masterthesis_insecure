@@ -9,9 +9,7 @@ import {exec} from 'child_process';
 
 // insecure deserialization
 import cookieParser from 'cookie-parser';
-import escape from 'escape-html';
 import serialize from 'node-serialize';
-import child_process from 'child_process';
 
 // routers
 import {jerseyRouter} from './routes/jerseys.js';
@@ -89,6 +87,10 @@ app.get('/path_traversal', (req, res) => {
     // let filePath = pathName + fileName
     let filePath = __dirname + fileName
     res.sendFile(filePath)
+})
+
+app.get('/xxe', (req, res) => {
+    res.sendFile(__dirname + '/views/pages/addJerseyXML.html')
 })
 
 app.get('/about', ((req, res) => res.render('about')))
