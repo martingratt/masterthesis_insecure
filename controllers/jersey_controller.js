@@ -69,5 +69,25 @@ export let jerseyController = {
                 season: season,
                 colour: colour
             });
+    },
+    getJerseysByUserId(req, res) {
+        const cookie = req.cookies.profile
+        if (cookie) {
+            const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+            const object = JSON.parse(utf8encoded)
+            const id = object.id
+            if (id) {
+                JerseyMysqlStorage.getJerseyByUserId(id).then(
+                    getJerseyByUserIdResult => {
+                        res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
+                        console.log(getJerseyByUserIdResult)
+                    }
+                ).catch(error => {res.status(500).send(error)})
+            } else {
+                res.render('404')
+            }
+        } else {
+            res.render('login')
+        }
     }
 }

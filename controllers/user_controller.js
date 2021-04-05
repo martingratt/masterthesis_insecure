@@ -29,6 +29,7 @@ export let userController = {
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
                     const cookie = {
+                        "id": getUserByUsernamePasswordResult[0].id,
                         "username": getUserByUsernamePasswordResult[0].username,
                         "city": getUserByUsernamePasswordResult[0].city
                     }

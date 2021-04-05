@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<h1>My Jerseys</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Club</th>
+        <th scope="col">Number</th>
+        <th scope="col">Size</th>
+        <th scope="col">Year</th>
+    </tr>
+    </thead>
+    <% jerseyArray.forEach(function(jersey) { %>
+        <tr>
+            <td><%= jersey.id %></td>
+            <td><%= jersey.name %></td>
+            <td><%= jersey.club %></td>
+            <td><%= jersey.number %></td>
+            <td><%= jersey.size %></td>
+            <td><%= jersey.year %></td>
+        </tr>
+    <% }); %>
+</table>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
