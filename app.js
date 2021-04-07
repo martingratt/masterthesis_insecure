@@ -14,6 +14,7 @@ import serialize from 'node-serialize';
 // routers
 import {jerseyRouter} from './routes/jerseys.js';
 import {userRouter} from "./routes/user_router.js";
+import {UserMysqlStorage} from "./models/user_mysql_storage.js";
 
 
 const app = express();
@@ -31,8 +32,13 @@ app.set('views', __dirname + '/views/pages');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.render('login')
+    res.render('login');
 });
+
+app.get('/logout', (req, res) => {
+    res.clearCookie('profile');
+    res.render('login');
+})
 
 app.use('/jerseys/', jerseyRouter);
 app.use('/user', userRouter);
@@ -87,6 +93,27 @@ app.get('/path_traversal', (req, res) => {
     // let filePath = pathName + fileName
     let filePath = __dirname + fileName
     res.sendFile(filePath)
+})
+
+app.get('/admin', (req, res) => {
+    const cookie = req.cookies.profile
+    if (cookie) {
+        const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+        const object = JSON.parse(utf8encoded)
+        const role = object.role
+        if (role === 2) {
+            UserMysqlStorage.getUsers().then(
+                getUsersResult => {
+                    res.render('userControl', {userArray: getUsersResult});
+                }
+            )
+        } else {
+            res.status(401).render('unauthorized');
+        }
+    } else {
+        res.status(401).render('unauthorized');
+    }
+
 })
 
 app.get('/xxe', (req, res) => {

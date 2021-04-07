@@ -31,7 +31,8 @@ export let userController = {
                     const cookie = {
                         "id": getUserByUsernamePasswordResult[0].id,
                         "username": getUserByUsernamePasswordResult[0].username,
-                        "city": getUserByUsernamePasswordResult[0].city
+                        "city": getUserByUsernamePasswordResult[0].city,
+                        "role": getUserByUsernamePasswordResult[0].role
                     }
                     let objJsonStr = JSON.stringify(cookie);
                     let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
@@ -46,5 +47,25 @@ export let userController = {
                     res.render('login')
                 }
             }).catch(error => res.status(500).send(error))
+    },
+    deleteUser(req, res) {
+        const id = req.params.id;
+        UserMysqlStorage.getUserById(id).then(
+            getUserByIdResult => {
+                if (getUserByIdResult[0].role === 2) {
+                    res.status(401).render('unauthorized');
+                } else {
+                    UserMysqlStorage.deleteUserById(id).then(
+                        deleteUserByIdResult => {
+                            UserMysqlStorage.getUsers().then(
+                                getUsersResult => {
+                                    res.render('userControl', {userArray: getUsersResult});
+                                }
+                            )
+                        }
+                    )
+                }
+            }
+        )
     }
 }

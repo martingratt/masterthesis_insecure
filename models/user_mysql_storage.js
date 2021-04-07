@@ -36,5 +36,41 @@ export const UserMysqlStorage = {
                 }
             })
         }))
+    },
+    getUsers() {
+        const stmt = `SELECT * FROM website_user`;
+        return new Promise(((resolve, reject) => {
+            pool.query(stmt, (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        }))
+    },
+    deleteUserById(id) {
+        const stmt = `DELETE FROM website_user WHERE id = ?`;
+        return new Promise(((resolve, reject) => {
+            pool.query(stmt, [id], (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        }))
+    },
+    getUserById(id) {
+        const stmt = `SELECT * FROM website_user WHERE id = ?`;
+        return new Promise(((resolve, reject) => {
+            pool.query(stmt, [id], (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        }))
     }
 }
