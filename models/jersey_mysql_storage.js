@@ -29,6 +29,20 @@ export class JerseyMysqlStorage {
         });
     }
 
+    static getJersey1(id) {
+        const stmt = `Select * FROM jersey j WHERE j.id = ` + id
+        return new Promise((resolve, reject) => {
+            pool.query(stmt, (error, result) => {
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(result)
+                }
+            })
+        });
+    }
+
+
     static insertJersey(club, name, number, size, year, colour) {
         const stmt = `Insert into jersey (club, name, number, size, year, colour) VALUES (?, ?, ?, ?, ?, ?)`
         return new Promise((resolve, reject) => {
