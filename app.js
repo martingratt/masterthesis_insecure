@@ -82,7 +82,7 @@ app.get('/insecure_deserialization', function(req, res) {
         }
 });
 
-
+// path traversal
 app.get('/terms_and_conditions', (req, res) => {
     res.sendFile(__dirname + '/views/pages/path_traversal.html')
 })
