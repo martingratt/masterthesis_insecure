@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
+//logout
 app.get('/logout', (req, res) => {
     res.clearCookie('profile');
     res.render('login');
