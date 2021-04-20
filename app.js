@@ -117,6 +117,7 @@ app.get('/admin', (req, res) => {
 
 })
 
+// XML External Entity
 app.get('/xxe', (req, res) => {
     res.sendFile(__dirname + '/views/pages/addJerseyXML.html')
 })
