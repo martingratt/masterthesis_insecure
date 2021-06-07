@@ -1,5 +1,6 @@
 import {JerseyMysqlStorage} from '../models/jersey_mysql_storage.js'
 import libxmljs from "libxmljs";
+import jwt from 'jsonwebtoken';
 
 export let jerseyController = {
     listJerseys(req, res) {
@@ -88,6 +89,31 @@ export let jerseyController = {
             }
         } else {
             res.render('login')
+        }
+    },
+    getJerseysByUserIdSession(req, res) {
+        if (req.session.userId) {
+            JerseyMysqlStorage.getJerseyByUserId(req.session.userId).then(
+                getJerseyByUserIdResult => {
+                    res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
+                }).catch(error => {res.status(500).send(error)})
+        } else {
+            res.render('loginsession')
+        }
+    },
+    getJerseysByUserIdJWT(req, res) {
+        const jwttoken = req.cookies.jwt;
+        const decoded = jwt.decode(jwttoken)
+        console.log(decoded)
+        if (decoded) {
+            const id = decoded.id
+            console.log(id)
+            JerseyMysqlStorage.getJerseyByUserId(id).then(
+                getJerseyByUserIdResult => {
+                    res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
+                }).catch(error => {res.status(500).send(error)})
+        } else {
+            res.render('loginJWT')
         }
     }
 }

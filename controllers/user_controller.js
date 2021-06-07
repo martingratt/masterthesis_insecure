@@ -1,5 +1,6 @@
 import {UserMysqlStorage} from "../models/user_mysql_storage.js";
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export let userController = {
     insertUser(res, req) {
@@ -67,5 +68,39 @@ export let userController = {
                 }
             }
         )
+    },
+    loginUserSession(req, res) {
+        const username = req.body.username;
+        const password = req.body.password;
+        const hash = crypto.createHash('md5').update(password).digest('hex');
+        UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
+            getUserByUsernamePasswordResult => {
+                if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
+                    req.session.userId = getUserByUsernamePasswordResult[0].id
+                    req.session.username = getUserByUsernamePasswordResult[0].username;
+                    req.session.city = getUserByUsernamePasswordResult[0].city;
+                    req.session.role = getUserByUsernamePasswordResult[0].role;
+                    res.render('index')
+                }
+            }).catch(error => res.status(500).send(error))
+    },
+    loginJWT(req, res) {
+        const username = req.body.username;
+        const password = req.body.password;
+        const hash = crypto.createHash('md5').update(password).digest('hex');
+        UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
+            getUserByUsernamePasswordResult => {
+                if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
+                    const id = getUserByUsernamePasswordResult[0].id;
+                    const userName = getUserByUsernamePasswordResult[0].username;
+                    const city = getUserByUsernamePasswordResult[0].city;
+                    const role = getUserByUsernamePasswordResult[0].role;
+                    const token = jwt.sign({id, userName, city, role}, 'masterthesis');
+                    res.cookie('jwt', token);
+                    res.render('index')
+                } else {
+                    res.render('loginJWT')
+                }
+            }).catch(error => res.status(500).send(error))
     }
 }

@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import path from 'path';
 import bodyParser from 'body-parser';
+import session from 'express-session';
+import jwt from 'jsonwebtoken';
 
 //command execution
 import {exec} from 'child_process';
@@ -22,6 +24,16 @@ const app = express();
 // ie
 app.use(cookieParser())
 
+app.use(session({
+    genid: function (req) {
+        const number = Math.floor(Math.random() * 10) + 1;
+        const string = number.toString();
+        return string;
+    },
+    secret: 'masterthesis',
+    name: 'loginsession'
+}))
+
 const port = process.env.APP_PORT || 8888
 const __dirname = path.resolve(path.dirname(''));
 
@@ -38,6 +50,8 @@ app.get('/', (req, res) => {
 //logout
 app.get('/logout', (req, res) => {
     res.clearCookie('profile');
+    res.clearCookie('jwt');
+    req.session.destroy()
     res.render('login');
 })
 
@@ -58,9 +72,7 @@ app.get('/command_execution', (req, res) => {
         } else {
             res.status(200).send(stdout)
         }
-
     });
-
 })
 app.get('/register', (req, res) => res.render('register'));
 
@@ -114,7 +126,6 @@ app.get('/admin', (req, res) => {
     } else {
         res.status(401).render('unauthorized');
     }
-
 })
 
 // XML External Entity
@@ -123,6 +134,11 @@ app.get('/xxe', (req, res) => {
 })
 
 app.get('/about', ((req, res) => res.render('about')))
+
+app.get('/loginsession', ((req, res) => res.render('loginsession')))
+
+app.get('/loginjwt', ((req, res) => res.render('loginJWT')))
+
 app.use((req, res, next) => {res.render('404')});
 
 app.listen(port, () =>
