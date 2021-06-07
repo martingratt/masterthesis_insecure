@@ -5,6 +5,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import jwt from 'jsonwebtoken';
+import si from 'systeminformation';
 
 //command execution
 import {exec} from 'child_process';
@@ -85,12 +86,15 @@ app.get('/insecure_deserialization', function(req, res) {
                 res.render('insecureDeserialization', {username: obj.username, city: obj.city})
             }
         } else {
+            res.render('login')
             // eyJ1c2VybmFtZSI6ICJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7Y29uc29sZS5sb2coJ3JjZScpOyB9KCkiICwiY291bnRyeSI6IkF1c3RyaWEiLCJjaXR5IjoiS3Vmc3RlaW4ifQ== console.log('rce');
+            /*
             res.cookie('profile', "eyJ1c2VybmFtZSI6IkFuZHJlYXMiLCJjb3VudHJ5IjoiQXVzdHJpYSIsImNpdHkiOiJWaWVubmEifQ==", {
                 maxAge: 900000,
                 httpOnly: true
             });
             res.render('insecureDeserialization', {username: 'Unknown', city: 'earth'})
+             */
         }
 });
 
@@ -135,12 +139,22 @@ app.get('/xxe', (req, res) => {
 
 app.get('/about', ((req, res) => res.render('about')))
 
-app.get('/loginsession', ((req, res) => res.render('loginsession')))
+app.get('/loginsession', ((req, res) => res.render('loginSession')))
 
 app.get('/loginjwt', ((req, res) => res.render('loginJWT')))
 
+app.get('/vuln', ((req, res) => {
+    console.log('TEST')
+    const queryData = req.query.name
+
+    si.services(queryData).then((data) => {
+        res.json(data);
+    });
+}));
+
 app.use((req, res, next) => {res.render('404')});
 
-app.listen(port, () =>
-    console.log("Server started at port " + port)
+app.listen(port, () => {
+        console.log("Server started at port " + port);
+}
 );

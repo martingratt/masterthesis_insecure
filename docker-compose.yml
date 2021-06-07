@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: masterthesis
+      MYSQL_USER: maadmin
+      MYSQL_PASSWORD: 4XC8IL1JzdcFkOImZ9fR
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '31307:3306'
+    expose:
+        # Opens port 31307 on the container
+      - '31307'
+        # Where our data will be persisted
+
+  app:
+    ports:
+      - '8888:8888'
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+volumes:
+  db_data: {}

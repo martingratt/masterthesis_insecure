@@ -98,7 +98,7 @@ export let jerseyController = {
                     res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
                 }).catch(error => {res.status(500).send(error)})
         } else {
-            res.render('loginsession')
+            res.render('loginSession')
         }
     },
     getJerseysByUserIdJWT(req, res) {

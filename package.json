@@ -30,7 +30,8 @@
     "libxmljs": "^0.19.7",
     "mysql": "^2.18.1",
     "node-serialize": "0.0.4",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "systeminformation": "^4.34.10"
   },
   "devDependencies": {
     "eslint": "^7.22.0"
