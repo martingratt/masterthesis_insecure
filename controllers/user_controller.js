@@ -22,7 +22,7 @@ export let userController = {
             }
         )
     },
-    getUser(res, req) {
+    loginUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
         const hash = crypto.createHash('md5').update(password).digest('hex');
@@ -81,6 +81,8 @@ export let userController = {
                     req.session.city = getUserByUsernamePasswordResult[0].city;
                     req.session.role = getUserByUsernamePasswordResult[0].role;
                     res.render('index')
+                } else {
+                    res.render('loginSession')
                 }
             }).catch(error => res.status(500).send(error))
     },

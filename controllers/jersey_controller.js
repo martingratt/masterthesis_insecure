@@ -28,7 +28,6 @@ export let jerseyController = {
             result1 => {
                 JerseyMysqlStorage.getJerseys().then(
                     result2 => {
-                        console.log(result2)
                         res.render('jerseys', {jerseyArray: result2})
                     }
                 ).catch(error => {res.status(500).send(error)})
@@ -104,10 +103,8 @@ export let jerseyController = {
     getJerseysByUserIdJWT(req, res) {
         const jwttoken = req.cookies.jwt;
         const decoded = jwt.decode(jwttoken)
-        console.log(decoded)
         if (decoded) {
             const id = decoded.id
-            console.log(id)
             JerseyMysqlStorage.getJerseyByUserId(id).then(
                 getJerseyByUserIdResult => {
                     res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
