@@ -43,8 +43,7 @@ app.use('/', router);
 
 // app.use(express.static(path.join(__dirname, 'utils')));
 
-app.get('/vuln', ((req, res) => {
-    const queryData = req.query.name
+app.get('/knownvuln', ((req, res) => {    const queryData = req.query.name
     si.services(queryData).then((data) => {
         res.json(data);
     });
