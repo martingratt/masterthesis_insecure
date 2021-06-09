@@ -143,8 +143,7 @@ app.get('/loginsession', ((req, res) => res.render('loginSession')))
 
 app.get('/loginjwt', ((req, res) => res.render('loginJWT')))
 
-app.get('/vuln', ((req, res) => {
-    console.log('TEST')
+app.get('/knownvuln', ((req, res) => {
     const queryData = req.query.name
 
     si.services(queryData).then((data) => {
