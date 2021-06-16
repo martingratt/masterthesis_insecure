@@ -1,14 +1,14 @@
 import {UserMysqlStorage} from "../models/user_mysql_storage.js";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import {createHash} from "../utils/utils.js";
+import {hash} from "../utils/utils.js";
 
 export let userController = {
     insertUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
         const city = req.body.city;
-        const hash = createHash(password)
+        const hash = hash(password)
         UserMysqlStorage.getUserByUserName(username).then(
             getUserByUserNameResult => {
                 if (Object.keys(getUserByUserNameResult).length !== 0) {
@@ -26,7 +26,7 @@ export let userController = {
     loginUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = createHash(password);
+        const hash = hash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
@@ -73,7 +73,7 @@ export let userController = {
     loginUserSession(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = createHash(password);
+        const hash = hash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
@@ -90,7 +90,7 @@ export let userController = {
     loginJWT(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = createHash(password);
+        const hash = hash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
