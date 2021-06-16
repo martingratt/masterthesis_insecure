@@ -1,13 +1,14 @@
 import {UserMysqlStorage} from "../models/user_mysql_storage.js";
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import {createHash} from "../utils/utils.js";
 
 export let userController = {
     insertUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
         const city = req.body.city;
-        const hash = crypto.createHash('md5').update(password).digest('hex');
+        const hash = createHash(password)
         UserMysqlStorage.getUserByUserName(username).then(
             getUserByUserNameResult => {
                 if (Object.keys(getUserByUserNameResult).length !== 0) {
@@ -17,7 +18,7 @@ export let userController = {
                         result => {
                             res.render('login')
                         }
-                    ).catch(error => res.status(500).send(error))
+                    ).catch(error => res.status(500).render(error))
                 }
             }
         )
@@ -25,7 +26,7 @@ export let userController = {
     loginUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = crypto.createHash('md5').update(password).digest('hex');
+        const hash = createHash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
@@ -72,7 +73,7 @@ export let userController = {
     loginUserSession(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = crypto.createHash('md5').update(password).digest('hex');
+        const hash = createHash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
@@ -89,7 +90,7 @@ export let userController = {
     loginJWT(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = crypto.createHash('md5').update(password).digest('hex');
+        const hash = createHash(password);
         UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
