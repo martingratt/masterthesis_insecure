@@ -7,13 +7,13 @@ export let userController = {
         const username = req.body.username;
         const password = req.body.password;
         const city = req.body.city;
-        const hash = hash(password)
+        const hashValue = hash(password)
         UserMysqlStorage.getUserByUserName(username).then(
             getUserByUserNameResult => {
                 if (Object.keys(getUserByUserNameResult).length !== 0) {
                     res.render('register')
                 } else {
-                    UserMysqlStorage.insertUser(username, hash, city).then(
+                    UserMysqlStorage.insertUser(username, hashValue, city).then(
                         result => {
                             res.render('login')
                         }
@@ -25,8 +25,8 @@ export let userController = {
     loginUser(res, req) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = hash(password);
-        UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
+        const hashValue = hash(password);
+        UserMysqlStorage.getUserByUsernamePassword(username, hashValue).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
                     const cookie = {
@@ -72,8 +72,8 @@ export let userController = {
     loginUserSession(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = hash(password);
-        UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
+        const hashValue = hash(password);
+        UserMysqlStorage.getUserByUsernamePassword(username, hashValue).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
                     req.session.userId = getUserByUsernamePasswordResult[0].id
@@ -89,8 +89,8 @@ export let userController = {
     loginJWT(req, res) {
         const username = req.body.username;
         const password = req.body.password;
-        const hash = hash(password);
-        UserMysqlStorage.getUserByUsernamePassword(username, hash).then(
+        const hashValue = hash(password);
+        UserMysqlStorage.getUserByUsernamePassword(username, hashValue).then(
             getUserByUsernamePasswordResult => {
                 if (Object.keys(getUserByUsernamePasswordResult).length === 1) {
                     const id = getUserByUsernamePasswordResult[0].id;
