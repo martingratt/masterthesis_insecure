@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS jersey
 (
     id            int auto_increment
         primary key,
-    club          varchar(255) null,
+    club          varchar(1000) null,
     size          varchar(255) null,
     name          varchar(255) null,
     year          year         null,

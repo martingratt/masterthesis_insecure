@@ -1,6 +1,5 @@
 import express from 'express';
 import {frontendController} from '../controllers/frontend_controller.js'
-import serialize from "node-serialize";
 import {UserMysqlStorage} from "../models/user_mysql_storage.js";
 import path from "path";
 
@@ -27,39 +26,14 @@ frontendRouter.get('/ping', ((req, res) => res.sendFile(__dirname + '/views/page
 frontendRouter.get('/register', (req, res) => res.render('register'));
 
 // insecure deserialziation
-frontendRouter.get('/insecure_deserialization', function(req, res) {
-    if (req.cookies.profile) {
-        const str = new Buffer(req.cookies.profile, 'base64').toString();
-        const obj = serialize.unserialize(str);
-        if (obj.username) {
-            res.render('insecureDeserialization', {username: obj.username, city: obj.city})
-        }
-    } else {
-        res.render('login')
-        // eyJ1c2VybmFtZSI6ICJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7Y29uc29sZS5sb2coJ3JjZScpOyB9KCkiICwiY291bnRyeSI6IkF1c3RyaWEiLCJjaXR5IjoiS3Vmc3RlaW4ifQ== console.log('rce');
-        /*
-        res.cookie('profile', "eyJ1c2VybmFtZSI6IkFuZHJlYXMiLCJjb3VudHJ5IjoiQXVzdHJpYSIsImNpdHkiOiJWaWVubmEifQ==", {
-            maxAge: 900000,
-            httpOnly: true
-        });
-        res.render('insecureDeserialization', {username: 'Unknown', city: 'earth'})
-         */
-    }
-});
+frontendRouter.get('/insecure_deserialization',(req, res) => frontendController.insecureDeserialization(req, res));
 
 // path traversal
 frontendRouter.get('/terms_and_conditions', (req, res) => {
     res.sendFile(__dirname + '/views/pages/path_traversal.html')
 })
 
-frontendRouter.get('/path_traversal', (req, res) => {
-    let fileName = req.query.fileName
-    // forbidden
-    // let pathName = __dirname + '/public/'
-    // let filePath = pathName + fileName
-    let filePath = __dirname + fileName
-    res.sendFile(filePath)
-})
+frontendRouter.get('/path_traversal', (req, res) => frontendController.pathTraversal(req, res))
 
 // XML External Entity
 frontendRouter.get('/xxe', (req, res) => {
@@ -85,6 +59,9 @@ frontendRouter.get('/admin', (req, res) => {
         res.status(401).render('unauthorized');
     }
 })
+
+frontendRouter.get('/knownvuln', ((req, res) => frontendController.knownVuln(req, res)));
+
 
 
 frontendRouter.get('/about', ((req, res) => res.render('about')))

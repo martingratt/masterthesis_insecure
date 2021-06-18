@@ -35,40 +35,39 @@ export let jerseyController = {
         ).catch(error => {res.status(500).send(error)})
     },
 
-    insertJerseyXML(jersey, res) {
-        let xml = jersey
+    insertJerseyXML(req, res) {
+        try {
+            let xml = req.body.xml
+            const xmlDoc = libxmljs.parseXml(xml, {noent: true});
+            const club = xmlDoc.get('//club').text();
+            const name = xmlDoc.get('//name').text();
+            const number = xmlDoc.get('//number').text();
+            const size = xmlDoc.get('//size').text();
+            const colour = xmlDoc.get('//colour').text();
+            const year = xmlDoc.get('//year').text();
 
-        /*
-        const params =  '<?xml version="1.0" encoding="UTF-8"?>' +
-        '<!DOCTYPE root [ <!ENTITY bar SYSTEM "file:///c:/windows/win.ini"> ]>' +
-        '<jerseyInfo>' +
-        '<club>Liverpool</club>' +
-        '<name>Salah</name>' +
-        '<number>&bar;</number>' +
-        '<size>m</size>' +
-        '<season>2020</season>>' +
-        '<colour>red</colour>' +
-        '</jerseyInfo>';
-         */
+            JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour).then(
+                result1 => {
+                    JerseyMysqlStorage.getJerseys().then(
+                        result2 => {
+                            res.status(200).send(
+                                {
+                                    message: 'Jersey successfully inserted!',
+                                    club: club,
+                                    name: name,
+                                    number: number,
+                                    size: size,
+                                    colour: colour,
+                                    year: year
+                                });
+                        }
+                    ).catch(error => {res.status(500).send(error)})
+                }
+            ).catch(error => {res.status(500).send(error)})
 
-        const xmlDoc = libxmljs.parseXml(xml, {noent: true});
-
-        const club = xmlDoc.get('//club').text();
-        const name = xmlDoc.get('//name').text();
-        const number = xmlDoc.get('//number').text();
-        const size = xmlDoc.get('//size').text();
-        const season = xmlDoc.get('//season').text();
-        const colour = xmlDoc.get('//colour').text();
-        res.status(200).send(
-            {
-                message: 'Jersey successfully inserted!',
-                club: club,
-                name: name,
-                number: number,
-                size: size,
-                season: season,
-                colour: colour
-            });
+        } catch (e) {
+            res.render('error')
+        }
     },
     getJerseysByUserId(req, res) {
         const cookie = req.cookies.profile

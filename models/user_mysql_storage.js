@@ -2,7 +2,7 @@ import {pool} from "../db_connection.js";
 
 export const UserMysqlStorage = {
     insertUser(username, password, city) {
-        const stmt = `INSERT INTO website_user (username, password, city) VALUES (?, ?, ?)`;
+        const stmt = `INSERT INTO website_user (username, password, city, role) VALUES (?, ?, ?, 1)`;
         return new Promise(((resolve, reject) => {
             pool.query(stmt, [username, password, city], (error, result) => {
                 if (error) {

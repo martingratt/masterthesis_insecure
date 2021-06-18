@@ -7,18 +7,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <script>
-
-        function postJersey1() {
-            document.getElementById('button1').disabled = false;
-            const exampleParagraph1 = document.getElementById('exampleParagraph1');
-            const club = document.getElementById('club').value;
-            exampleParagraph1.innerHTML =  'Are you sure you want to add the following jersey of ' + club
-        }
-
-    </script>
-
-
 </head>
 <body>
 
@@ -64,9 +52,9 @@
     </form>
 
     <p><%- userInput %></p>
-    <p id ="exampleParagraph1"></p>
+    <p id ="checkInputParagraph"></p>
 
-    <button class="btn btn-primary" onclick="xss()">Check</button>
+    <button id="checkButton" class="btn btn-primary" onclick="checkInput()">Check</button>
 
 </div>
 
