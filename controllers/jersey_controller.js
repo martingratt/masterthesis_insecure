@@ -79,7 +79,6 @@ export let jerseyController = {
                 JerseyMysqlStorage.getJerseyByUserId(id).then(
                     getJerseyByUserIdResult => {
                         res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
-                        console.log(getJerseyByUserIdResult)
                     }
                 ).catch(error => {res.status(500).send(error)})
             } else {

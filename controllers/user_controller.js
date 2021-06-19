@@ -39,7 +39,7 @@ export let userController = {
                     let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
                     res.cookie('profile', objJsonB64, {
                         maxAge: 900000,
-                        httpOnly: true
+                        httpOnly: true,
                     });
                     res.render('index');
                 } else {
