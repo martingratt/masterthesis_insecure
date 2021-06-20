@@ -40,31 +40,13 @@ frontendRouter.get('/xxe', (req, res) => {
     res.sendFile(__dirname + '/views/pages/addJerseyXML.html')
 })
 
-frontendRouter.get('/admin', (req, res) => {
-    const cookie = req.cookies.profile
-    if (cookie) {
-        const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
-        const object = JSON.parse(utf8encoded)
-        const role = object.role
-        if (role === 2) {
-            UserMysqlStorage.getUsers().then(
-                getUsersResult => {
-                    res.render('userControl', {userArray: getUsersResult});
-                }
-            )
-        } else {
-            res.status(401).render('unauthorized');
-        }
-    } else {
-        res.status(401).render('unauthorized');
-    }
-})
+frontendRouter.get('/admin', (req, res) => frontendController.brokenAccessControl(req, res))
 
 frontendRouter.get('/knownvuln', ((req, res) => frontendController.knownVuln(req, res)));
 
-
-
 frontendRouter.get('/about', ((req, res) => res.render('about')))
+
+frontendRouter.get('/logincookie', ((req, res) => res.render('login')))
 
 frontendRouter.get('/loginsession', ((req, res) => res.render('loginSession')))
 
