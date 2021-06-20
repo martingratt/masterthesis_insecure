@@ -18,9 +18,7 @@ app.use(cookieParser())
 
 app.use(session({
     genid: function (req) {
-        const number = Math.floor(Math.random() * 10) + 1;
-        const string = number.toString();
-        return string;
+        return (Math.floor(Math.random() * 10) + 1).toString();
     },
     secret: 'masterthesis',
     name: 'loginsession'
