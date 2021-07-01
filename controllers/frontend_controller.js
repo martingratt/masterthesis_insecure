@@ -11,7 +11,7 @@ export class frontendController {
         const command = 'ping ' + req.query.ip;
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                res.status(500).send(error)
+                res.status(500).render('error')
             } else {
                 res.status(200).send(stdout)
             }

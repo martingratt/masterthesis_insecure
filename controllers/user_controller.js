@@ -47,7 +47,7 @@ export let userController = {
                     res.clearCookie('profile');
                     res.render('login')
                 }
-            }).catch(error => res.status(500).send(error))
+            }).catch(error => res.status(500).render('error'))
     },
     deleteUser(req, res) {
         const id = req.params.id;
@@ -84,7 +84,7 @@ export let userController = {
                 } else {
                     res.render('loginSession')
                 }
-            }).catch(error => res.status(500).send(error))
+            }).catch(error => res.status(500).render('error'))
     },
     loginJWT(req, res) {
         const username = req.body.username;
@@ -103,6 +103,6 @@ export let userController = {
                 } else {
                     res.render('loginJWT')
                 }
-            }).catch(error => res.status(500).send(error))
+            }).catch(error => res.status(500).render('error'))
     }
 }

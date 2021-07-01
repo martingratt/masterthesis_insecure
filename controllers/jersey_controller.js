@@ -8,7 +8,7 @@ export let jerseyController = {
             result => {
                 res.render('jerseys', {jerseyArray: result})
             }
-        ).catch(error => {res.status(500).send(error)})
+        ).catch(error => {res.status(500).render('error')})
     },
 
     listJersey(id, res) {
@@ -21,7 +21,7 @@ export let jerseyController = {
                      res.render('404')
                 }
             }
-        ).catch(error => {res.status(500).send(error)})
+        ).catch(error => {res.status(500).render('error')})
     },
     insertJersey(club, name, number, size, year, colour, res) {
         JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour).then(
@@ -30,9 +30,9 @@ export let jerseyController = {
                     result2 => {
                         res.render('jerseys', {jerseyArray: result2})
                     }
-                ).catch(error => {res.status(500).send(error)})
+                ).catch(error => {res.status(500).render('error')})
             }
-        ).catch(error => {res.status(500).send(error)})
+        ).catch(error => {res.status(500).render('error')})
     },
 
     insertJerseyXML(req, res) {
@@ -61,9 +61,9 @@ export let jerseyController = {
                                     year: year
                                 });
                         }
-                    ).catch(error => {res.status(500).send(error)})
+                    ).catch(error => {res.status(500).render('error')})
                 }
-            ).catch(error => {res.status(500).send(error)})
+            ).catch(error => {res.status(500).render('error')})
 
         } catch (e) {
             res.render('error')
@@ -80,7 +80,7 @@ export let jerseyController = {
                     getJerseyByUserIdResult => {
                         res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
                     }
-                ).catch(error => {res.status(500).send(error)})
+                ).catch(error => {res.status(500).render('error')})
             } else {
                 res.render('404')
             }
@@ -93,7 +93,7 @@ export let jerseyController = {
             JerseyMysqlStorage.getJerseyByUserId(req.session.userId).then(
                 getJerseyByUserIdResult => {
                     res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
-                }).catch(error => {res.status(500).send(error)})
+                }).catch(error => {res.status(500).render('error')})
         } else {
             res.render('loginSession')
         }
@@ -106,7 +106,7 @@ export let jerseyController = {
             JerseyMysqlStorage.getJerseyByUserId(id).then(
                 getJerseyByUserIdResult => {
                     res.render('myJerseys', {jerseyArray: getJerseyByUserIdResult})
-                }).catch(error => {res.status(500).send(error)})
+                }).catch(error => {res.status(500).render('error')})
         } else {
             res.render('loginJWT')
         }
