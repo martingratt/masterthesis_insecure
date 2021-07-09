@@ -17,9 +17,7 @@ frontendRouter.get('/about', ((req, res) => res.render('about')))
 // home
 frontendRouter.get('/home', (req, res) => res.render('index'));
 // add jersey
-frontendRouter.get('/addJersey', (req, res) => {
-    res.render('addJersey', {userInput: req.query.userInput, title: 'Add jersey'})
-});
+frontendRouter.get('/addJersey', (req, res) => frontendController.addJersey(req, res));
 
 frontendRouter.get('/addJersey1', (req, res) => {res.sendFile(__dirname + '/views/pages/addJersey.html')})
 frontendRouter.get('/ping', ((req, res) => res.sendFile(__dirname + '/views/pages/ping.html')))
@@ -51,6 +49,5 @@ frontendRouter.get('/logincookie', ((req, res) => res.render('login')))
 frontendRouter.get('/loginsession', ((req, res) => res.render('loginSession')))
 
 frontendRouter.get('/loginjwt', ((req, res) => res.render('loginJWT')))
-
 
 export {frontendRouter}

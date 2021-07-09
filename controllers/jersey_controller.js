@@ -23,48 +23,62 @@ export let jerseyController = {
             }
         ).catch(error => {res.status(500).render('error')})
     },
-    insertJersey(club, name, number, size, year, colour, res) {
-        JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour).then(
-            result1 => {
-                JerseyMysqlStorage.getJerseys().then(
-                    result2 => {
-                        res.render('jerseys', {jerseyArray: result2})
-                    }
-                ).catch(error => {res.status(500).render('error')})
-            }
-        ).catch(error => {res.status(500).render('error')})
-    },
-
-    insertJerseyXML(req, res) {
-        try {
-            let xml = req.body.xml
-            const xmlDoc = libxmljs.parseXml(xml, {noent: true});
-            const club = xmlDoc.get('//club').text();
-            const name = xmlDoc.get('//name').text();
-            const number = xmlDoc.get('//number').text();
-            const size = xmlDoc.get('//size').text();
-            const colour = xmlDoc.get('//colour').text();
-            const year = xmlDoc.get('//year').text();
-
-            JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour).then(
+    insertJersey(cookies, club, name, number, size, year, colour, res) {
+        const cookie = cookies.profile
+        if (cookie) {
+            const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+            const object = JSON.parse(utf8encoded)
+            const id = object.id
+            JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour, id).then(
                 result1 => {
                     JerseyMysqlStorage.getJerseys().then(
                         result2 => {
-                            res.status(200).send(
-                                {
-                                    message: 'Jersey successfully inserted!',
-                                    club: club,
-                                    name: name,
-                                    number: number,
-                                    size: size,
-                                    colour: colour,
-                                    year: year
-                                });
+                            res.render('jerseys', {jerseyArray: result2})
                         }
                     ).catch(error => {res.status(500).render('error')})
                 }
             ).catch(error => {res.status(500).render('error')})
+        } else {
+            res.render('login')
+        }
+    },
 
+    insertJerseyXML(req, res) {
+        try {
+            const cookie = req.cookies.profile
+            if (cookie) {
+                const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+                const object = JSON.parse(utf8encoded)
+                const id = object.id
+                let xml = req.body.xml
+                const xmlDoc = libxmljs.parseXml(xml, {noent: true});
+                const club = xmlDoc.get('//club').text();
+                const name = xmlDoc.get('//name').text();
+                const number = xmlDoc.get('//number').text();
+                const size = xmlDoc.get('//size').text();
+                const colour = xmlDoc.get('//colour').text();
+                const year = xmlDoc.get('//year').text();
+                JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour, id).then(
+                    result1 => {
+                        JerseyMysqlStorage.getJerseys().then(
+                            result2 => {
+                                res.status(200).send(
+                                    {
+                                        message: 'Jersey successfully inserted!',
+                                        club: club,
+                                        name: name,
+                                        number: number,
+                                        size: size,
+                                        colour: colour,
+                                        year: year
+                                    });
+                            }
+                        ).catch(error => {res.status(500).render('error')})
+                    }
+                ).catch(error => {res.status(500).render('error')})
+            } else {
+                res.render('login')
+            }
         } catch (e) {
             res.render('error')
         }

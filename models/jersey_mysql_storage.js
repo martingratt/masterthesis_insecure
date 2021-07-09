@@ -43,10 +43,10 @@ export class JerseyMysqlStorage {
     }
 
 
-    static insertJersey(club, name, number, size, year, colour) {
-        const stmt = `Insert into jersey (club, name, number, size, year, colour) VALUES (?, ?, ?, ?, ?, ?)`
+    static insertJersey(club, name, number, size, year, colour, websiteUserId) {
+        const stmt = `Insert into jersey (club, name, number, size, year, colour, websiteUserId) VALUES (?, ?, ?, ?, ?, ?, ?)`
         return new Promise((resolve, reject) => {
-            pool.query(stmt, [club, name, number, size, year, colour], (error, result) => {
+            pool.query(stmt, [club, name, number, size, year, colour, websiteUserId], (error, result) => {
                 if (error) {
                     reject(error)
                 } else {

@@ -75,4 +75,13 @@ export class frontendController {
             res.status(401).render('unauthorized');
         }
     }
+
+    static addJersey(req, res) {
+        const cookie = req.cookies.profile
+        if (cookie) {
+            res.render('addJersey', {userInput: req.query.userInput, title: 'Add jersey'})
+        } else {
+            res.render('login')
+        }
+    }
 }

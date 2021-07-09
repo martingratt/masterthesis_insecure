@@ -20,7 +20,6 @@ services:
     expose:
         # Opens port 31307 on the container
       - '31307'
-        # Where our data will be persisted
 
   app:
     ports:
