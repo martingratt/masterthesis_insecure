@@ -1,6 +1,5 @@
 import express from 'express';
 import {frontendController} from '../controllers/frontend_controller.js'
-import {UserMysqlStorage} from "../models/user_mysql_storage.js";
 import path from "path";
 
 let frontendRouter = express.Router();
