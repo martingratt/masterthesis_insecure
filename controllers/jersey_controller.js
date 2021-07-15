@@ -23,8 +23,8 @@ export let jerseyController = {
             }
         ).catch(error => {res.status(500).render('error')})
     },
-    insertJersey(cookies, club, name, number, size, year, colour, res) {
-        const cookie = cookies.profile
+    insertJersey(req, club, name, number, size, year, colour, res) {
+        const cookie = req.cookies.profile
         if (cookie) {
             const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
             const object = JSON.parse(utf8encoded)
