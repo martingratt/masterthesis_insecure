@@ -98,7 +98,7 @@ export let userController = {
                     const city = getUserByUsernamePasswordResult[0].city;
                     const role = getUserByUsernamePasswordResult[0].role;
                     const token = jwt.sign({id, userName, city, role}, 'masterthesis');
-                    res.cookie('jwt', token);
+                    res.cookie('jwt', token, {httpOnly: true});
                     res.render('index')
                 } else {
                     res.render('loginJWT')
