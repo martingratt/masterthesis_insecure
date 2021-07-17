@@ -58,9 +58,8 @@ export class JerseyMysqlStorage {
 
     // SQLi 2
     static getJerseyByUserId(userId) {
-        const stmt = `SELECT * FROM jersey j WHERE j.websiteUserId =` + userId
         return new Promise((resolve, reject) => {
-            pool.query(stmt, (error, result) => {
+            pool.query(`SELECT * FROM jersey j WHERE j.websiteUserId =` + userId, (error, result) => {
                 if (error) {
                     reject(error)
                 } else {
