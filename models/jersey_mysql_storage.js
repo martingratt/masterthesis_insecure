@@ -56,10 +56,9 @@ export class JerseyMysqlStorage {
         });
     }
 
-    // SQLi 2
     static getJerseyByUserId(userId) {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT * FROM jersey j WHERE j.websiteUserId =` + userId, (error, result) => {
+            pool.query(`SELECT * FROM jersey j WHERE j.websiteUserId = ?`, [userId], (error, result) => {
                 if (error) {
                     reject(error)
                 } else {
@@ -68,5 +67,4 @@ export class JerseyMysqlStorage {
             })
         });
     }
-
 }
