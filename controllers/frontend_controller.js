@@ -36,7 +36,7 @@ export class frontendController {
 
     static insecureDeserialization(req, res) {
         if (req.cookies.profile) {
-            const str = new Buffer(req.cookies.profile, 'base64').toString();
+            const str = Buffer.from(req.cookies.profile, 'base64').toString()
             const obj = serialize.unserialize(str);
             if (obj.username) {
                 res.render('insecureDeserialization',
@@ -59,7 +59,7 @@ export class frontendController {
     static brokenAccessControl(req, res) {
         const cookie = req.cookies.profile
         if (cookie) {
-            const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+            const utf8encoded = Buffer.from(cookie, 'base64').toString('utf8');
             const object = JSON.parse(utf8encoded)
             const role = object.role
             if (role === 2) {

@@ -26,7 +26,7 @@ export let jerseyController = {
     insertJersey(req, club, name, number, size, year, colour, res) {
         const cookie = req.cookies.profile
         if (cookie) {
-            const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+            const utf8encoded = Buffer.from(cookie, 'base64').toString('utf8');
             const object = JSON.parse(utf8encoded)
             const id = object.id
             JerseyMysqlStorage.insertJersey(club, name, number, size, year, colour, id).then(
@@ -47,7 +47,7 @@ export let jerseyController = {
         try {
             const cookie = req.cookies.profile
             if (cookie) {
-                const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+                const utf8encoded = Buffer.from(cookie, 'base64').toString('utf8');
                 const object = JSON.parse(utf8encoded)
                 const id = object.id
                 let xml = req.body.xml
@@ -86,7 +86,7 @@ export let jerseyController = {
     getJerseysByUserId(req, res) {
         const cookie = req.cookies.profile
         if (cookie) {
-            const utf8encoded = (new Buffer(cookie, 'base64')).toString('utf8');
+            const utf8encoded = Buffer.from(cookie, 'base64').toString('utf8');
             const object = JSON.parse(utf8encoded)
             const id = object.id
             if (id) {
